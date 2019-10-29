@@ -1,9 +1,9 @@
 package LA03;
 
 // ============================================================================
-class CuentaIncrementos {
+class CuentaIncrementosVolatile {
 // ============================================================================
-  int numIncrementos = 0;
+  volatile int numIncrementos = 0;
 
   // --------------------------------------------------------------------------
   void incrementaNumIncrementos() {
@@ -18,13 +18,13 @@ class CuentaIncrementos {
 
 
 // ============================================================================
-class MiHebra extends Thread {
+class MiHebraVolatile extends Thread {
 // ============================================================================
   int tope;
-	CuentaIncrementos c;
+  CuentaIncrementosVolatile c;
 
   // --------------------------------------------------------------------------
-  public MiHebra( int tope, CuentaIncrementos c ) {
+  public MiHebraVolatile(int tope, CuentaIncrementosVolatile c ) {
     this.tope  = tope;
     this.c     = c;
   }
@@ -38,7 +38,7 @@ class MiHebra extends Thread {
 }
 
 // ============================================================================
-class EjemploCuentaIncrementos {
+class EjemploCuentaIncrementosVolatile {
 // ============================================================================
 
   // --------------------------------------------------------------------------
@@ -64,13 +64,13 @@ class EjemploCuentaIncrementos {
 
     System.out.println( "numHebras: " + numHebras );
     System.out.println( "tope:      " + tope );
-
-	  MiHebra v[] = new MiHebra[ numHebras ];
-	  CuentaIncrementos c = new CuentaIncrementos();
+    
+    MiHebraVolatile v[] = new MiHebraVolatile[ numHebras ];
+    CuentaIncrementosVolatile c = new CuentaIncrementosVolatile();
     t1 = System.nanoTime();
     System.out.println( "Creando y arrancando " + numHebras + " hebras." );
     for( int i = 0; i < numHebras; i++ ) {
-      v[ i ] = new MiHebra( tope, c );
+      v[ i ] = new MiHebraVolatile( tope, c );
       v[ i ].start();
     }
     for( int i = 0; i < numHebras; i++ ) {
