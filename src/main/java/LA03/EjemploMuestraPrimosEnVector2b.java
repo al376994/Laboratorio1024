@@ -106,7 +106,7 @@ public class EjemploMuestraPrimosEnVector2b {
 		t2 = System.nanoTime();
 		tc = ( ( double ) ( t2 - t1 ) ) / 1.0e9;
 		System.out.println( "Tiempo paralela ciclica (seg.):              " + tc );
-		System.out.println( "Incremento paralela ciclica:                 " + (tc/ts) );
+		System.out.println( "Incremento paralela ciclica:                 " + (ts/tc) );
 		//
 		// Implementacion paralela por bloques.
 		//
