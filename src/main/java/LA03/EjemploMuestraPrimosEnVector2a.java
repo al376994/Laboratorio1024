@@ -4,58 +4,58 @@ package LA03;
 public class EjemploMuestraPrimosEnVector2a {
 // ===========================================================================
 
-  // -------------------------------------------------------------------------
-  public static void main( String args[] ) {
-    int     numHebras;
-    long    t1, t2;
-    double  ts, tc, tb, td;
-    long    vectorNumeros[] = {
-                200000033L, 200000039L, 200000051L, 200000069L, 
-                200000081L, 200000083L, 200000089L, 200000093L, 
-                4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L
-            };
-    //// long    vectorNumeros[] = {
-                //// 200000033L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                //// 200000039L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                //// 200000051L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                //// 200000069L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                //// 200000081L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                //// 200000083L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                //// 200000089L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
-                //// 200000093L, 4L, 4L, 4L, 4L, 4L, 4L, 4L
-            //// };
-    // Comprobacion y extraccion de los argumentos de entrada.
-    if( args.length != 1 ) {
-      System.err.println( "Uso: java programa <numHebras>" );
-      System.exit( -1 );
-    }
-    try {
-      numHebras = Integer.parseInt( args[ 0 ] );
-    } catch( NumberFormatException ex ) {
-      numHebras = -1;
-      System.out.println( "ERROR: Argumentos numericos incorrectos." );
-      System.exit( -1 );
-    }
-    //
-    // Implementacion secuencial.
-    //
-    System.out.println( "" );
-    System.out.println( "Implementacion secuencial." );
-    t1 = System.nanoTime();
-    for( int i = 0; i < vectorNumeros.length; i++ ) {
-      if( esPrimo( vectorNumeros[ i ] ) ) {
-        System.out.println( "  Encontrado primo: " + vectorNumeros[ i ] );
-      }
-    }
-    t2 = System.nanoTime();
-    ts = ( ( double ) ( t2 - t1 ) ) / 1.0e9;
-    System.out.println( "Tiempo secuencial (seg.):                    " + ts );
+	// -------------------------------------------------------------------------
+	public static void main( String args[] ) {
+		int     numHebras;
+		long    t1, t2;
+		double  ts, tc, tb, td;
+		long    vectorNumeros[] = {
+				200000033L, 200000039L, 200000051L, 200000069L,
+				200000081L, 200000083L, 200000089L, 200000093L,
+				4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+				4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+				4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+				4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+				4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+				4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+				4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L
+		};
+		//// long    vectorNumeros[] = {
+		//// 200000033L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+		//// 200000039L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+		//// 200000051L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+		//// 200000069L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+		//// 200000081L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+		//// 200000083L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+		//// 200000089L, 4L, 4L, 4L, 4L, 4L, 4L, 4L,
+		//// 200000093L, 4L, 4L, 4L, 4L, 4L, 4L, 4L
+		//// };
+		// Comprobacion y extraccion de los argumentos de entrada.
+		if( args.length != 1 ) {
+			System.err.println( "Uso: java programa <numHebras>" );
+			System.exit( -1 );
+		}
+		try {
+			numHebras = Integer.parseInt( args[ 0 ] );
+		} catch( NumberFormatException ex ) {
+			numHebras = -1;
+			System.out.println( "ERROR: Argumentos numericos incorrectos." );
+			System.exit( -1 );
+		}
+		//
+		// Implementacion secuencial.
+		//
+		System.out.println( "" );
+		System.out.println( "Implementacion secuencial." );
+		t1 = System.nanoTime();
+		for( int i = 0; i < vectorNumeros.length; i++ ) {
+			if( esPrimo( vectorNumeros[ i ] ) ) {
+				System.out.println( "  Encontrado primo: " + vectorNumeros[ i ] );
+			}
+		}
+		t2 = System.nanoTime();
+		ts = ( ( double ) ( t2 - t1 ) ) / 1.0e9;
+		System.out.println( "Tiempo secuencial (seg.):                    " + ts );
 /*
     //
     // Implementacion paralela ciclica.
@@ -78,21 +78,21 @@ public class EjemploMuestraPrimosEnVector2a {
     //
     // ....
 */
-  }
+	}
 
-  // -------------------------------------------------------------------------
-  static boolean esPrimo( long num ) {
-    boolean primo;
-    if( num < 2 ) {
-      primo = false;
-    } else {
-      primo = true;
-      long i = 2;
-      while( ( i < num )&&( primo ) ) { 
-        primo = ( num % i != 0 );
-        i++;
-      }
-    }
-    return( primo );
-  }
+	// -------------------------------------------------------------------------
+	static boolean esPrimo( long num ) {
+		boolean primo;
+		if( num < 2 ) {
+			primo = false;
+		} else {
+			primo = true;
+			long i = 2;
+			while( ( i < num )&&( primo ) ) {
+				primo = ( num % i != 0 );
+				i++;
+			}
+		}
+		return( primo );
+	}
 }
