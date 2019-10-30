@@ -1,5 +1,7 @@
 package LA03;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 // ============================================================================
 class MiHebraCiclica extends Thread {
 // ============================================================================
@@ -16,6 +18,32 @@ class MiHebraCiclica extends Thread {
 
 	public void run() {
 		for(int i = miId; i < vectorNumeros.length; i+=numHebras) {
+			if( EjemploMuestraPrimosEnVector2b.esPrimo( vectorNumeros[i] ) ) {
+				System.out.println( "  Encontrado primo: " + vectorNumeros[i] );
+			}
+		}
+	}
+}
+
+// ============================================================================
+class MiHebraDinamica extends Thread {
+	// ============================================================================
+	int miId;
+	int numHebras;
+	long vectorNumeros[];
+	AtomicInteger indice;
+
+	// -------------------------------------------------------------------------
+	MiHebraDinamica (int miId, int numHebras, long vectorNumeros[], AtomicInteger indice) {
+		this.miId = miId;
+		this.numHebras = numHebras;
+		this.vectorNumeros = vectorNumeros;
+		this.indice = indice;
+	}
+
+	public void run() {
+
+		for( int i=indice.getAndIncrement(); i<vectorNumeros.length; i=indice.getAndIncrement()){
 			if( EjemploMuestraPrimosEnVector2b.esPrimo( vectorNumeros[i] ) ) {
 				System.out.println( "  Encontrado primo: " + vectorNumeros[i] );
 			}
@@ -114,8 +142,27 @@ public class EjemploMuestraPrimosEnVector2b {
 		//
 		// Implementacion paralela dinamica.
 		//
-		// ....
+		System.out.println( "" );
+		System.out.println( "Implementacion paralela dinamica." );
+		t1 = System.nanoTime();
 
+		MiHebraDinamica hd[] = new MiHebraDinamica[numHebras];
+		AtomicInteger indice = new AtomicInteger(0);
+		for(int i = 0; i < numHebras; i++) {
+			hd[i] = new MiHebraDinamica(i, numHebras, vectorNumeros, indice);
+			hd[i].start();
+		}
+		for(int i = 0; i < numHebras; i++) {
+			try {
+				hd[i].join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		t2 = System.nanoTime();
+		tc = ( ( double ) ( t2 - t1 ) ) / 1.0e9;
+		System.out.println( "Tiempo paralela dinamica (seg.):              " + tc );
+		System.out.println( "Incremento paralela dinamica:                 " + (ts/tc) );
 	}
 
 	// -------------------------------------------------------------------------
