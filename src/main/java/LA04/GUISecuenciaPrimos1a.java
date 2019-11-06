@@ -2,6 +2,8 @@ package LA04;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -29,6 +31,8 @@ public class GUISecuenciaPrimos1a {
     // Constantes.
     final int valorMaximo = 1000;
     final int valorMedio  = 500;
+    AtomicBoolean flag = new AtomicBoolean(true);
+    ZonaIntercambio zonaIntercambio = new ZonaIntercambio();
 
     // Variables.
     JPanel  tempPanel;
@@ -75,6 +79,10 @@ public class GUISecuenciaPrimos1a {
         public void actionPerformed( ActionEvent e ) {
 			btnComienzaSecuencia.setEnabled( false );
 			btnCancelaSecuencia.setEnabled( true );
+			flag.set(true);
+			HebraTrabajadora ht = new HebraTrabajadora(flag, zonaIntercambio);
+			ht.setDaemon(true);
+			ht.start();
         }
     } );
 
@@ -83,6 +91,7 @@ public class GUISecuenciaPrimos1a {
         public void actionPerformed( ActionEvent e ) {
 			btnComienzaSecuencia.setEnabled( true );
 			btnCancelaSecuencia.setEnabled( false );
+			flag.set(false);
         }
     } );
 
@@ -92,7 +101,7 @@ public class GUISecuenciaPrimos1a {
         JSlider sl = ( JSlider ) e.getSource();
         if ( ! sl.getValueIsAdjusting() ) {
           long tiempoMilisegundos = ( long ) sl.getValue();
-          // ...
+          	zonaIntercambio.set(tiempoMilisegundos);
         }
       }
     } );
@@ -106,20 +115,64 @@ public class GUISecuenciaPrimos1a {
     System.out.println( "% End of routine: go.\n" );
   }
 
-  // -------------------------------------------------------------------------
-  static boolean esPrimo( long num ) {
-    boolean primo;
-    if( num < 2 ) {
-      primo = false;
-    } else {
-      primo = true;
-      long i = 2;
-      while( ( i < num )&&( primo ) ) {
-        primo = ( num % i != 0 );
-        i++;
-      }
-    }
-    return( primo );
-  }
+	// -------------------------------------------------------------------------
+	static boolean esPrimo( long num ) {
+		boolean primo;
+		if( num < 2 ) {
+			primo = false;
+		} else {
+			primo = true;
+			long i = 2;
+			while( ( i < num )&&( primo ) ) {
+				primo = ( num % i != 0 );
+				i++;
+			}
+		}
+		return( primo );
+	}
+
+	class HebraTrabajadora extends Thread {
+
+		AtomicBoolean flag;
+		ZonaIntercambio zonaIntercambio;
+
+		public HebraTrabajadora(AtomicBoolean flag, ZonaIntercambio zonaIntercambio) {
+			this.flag = flag;
+			this.zonaIntercambio = zonaIntercambio;
+		}
+
+		public void run() {
+			int i = 0;
+			while(flag.get()){
+				if(esPrimo(i)) {
+					int finalI = i;
+					try {
+						sleep(zonaIntercambio.get());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							txfMensajes.setText(String.valueOf(finalI));
+						}
+					} );
+				}
+				i++;
+			}
+		}
+	}
+
+	class ZonaIntercambio {
+  		AtomicLong sleepTime = new AtomicLong(500L);
+
+  		void set(long time) {
+  			sleepTime.set(time);
+		}
+
+		long get() {
+  			return sleepTime.get();
+		}
+	}
+
 }
 
