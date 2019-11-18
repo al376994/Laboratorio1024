@@ -330,7 +330,7 @@ class EjemploPalabraMasUsada1a {
 	}
 }
 
-class MiHebra_1 extends Thread{ //TODO
+class MiHebra_1 extends Thread {
 	private int miId, numHebras;
 	private HashMap<String, Integer> hmCuentaPalabras;
 	private ArrayList<String> arrayLineas;
@@ -361,7 +361,7 @@ class MiHebra_1 extends Thread{ //TODO
 
 }
 
-class MiHebra_2 extends Thread{ //TODO
+class MiHebra_2 extends Thread {
 	private int miId, numHebras;
 	private Hashtable<String, Integer> hmCuentaPalabras;
 	private ArrayList<String> arrayLineas;
@@ -392,7 +392,7 @@ class MiHebra_2 extends Thread{ //TODO
 
 }
 
-class MiHebra_3 extends Thread{
+class MiHebra_3 extends Thread {
 	private int miId, numHebras;
 	private ConcurrentHashMap<String, Integer> hmCuentaPalabras;
 	private ArrayList<String> arrayLineas;
