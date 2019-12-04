@@ -88,7 +88,13 @@ int main( int argc, char * argv[] ) {
     	} else {
     		MPI_Recv( vecArgs, 4, MPI_INT, 0, 88, MPI_COMM_WORLD, &s );
 	}
-	
+
+	// ### Barrier añadido para poder leer facilmente la salida.
+	MPI_Barrier(MPI_COMM_WORLD);
+	if (miId == 0) printf("\n");
+	MPI_Barrier(MPI_COMM_WORLD);
+	// ###
+
 	// Todos los procesos extraen la informacion almacena en el vector vecArgs.
 	numMensajes = vecArgs[ 0 ];
 	minTam      = vecArgs[ 1 ];
@@ -164,7 +170,7 @@ int main( int argc, char * argv[] ) {
 	MPI_Finalize();
 	
 	if ( miId == 0 ) {
-		printf( " End of program\n" );
+		printf( " End of program\n\n" );
 	}
 	return 0;
 }
