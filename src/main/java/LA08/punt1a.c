@@ -134,17 +134,48 @@ int main( int argc, char * argv[] ) {
 		printf( "--------------------------------" );
 		printf( "--------------------------------------\n");
 	}
-	
+
 	for( tam = minTam; tam <= maxTam; tam += incTam ) {
 	
 		// Sincronizacion de todos los procesos
 		MPI_Barrier( MPI_COMM_WORLD );
 	
 		// Bucle de envio de "numMensajes" de dimension "tam" y toma de tiempos.	####	C	 ####
-		// ... (C)
+		if(miId == 0 || miId == 1) {
+
+			// #Inicialización de variables y t1
+
+			int i;
+			if(miId == 0) {
+				 t1 = MPI_Wtime();
+			}
+
+			// #Envio de mensajes
+			for (i = 0; i < numMensajes; i++) {
+				if(miId == 0) {
+					MPI_Send( ptrWorkspace, tam, MPI_BYTE, 1, 88, MPI_COMM_WORLD );
+				} else if(miId == 1) {
+					MPI_Recv( ptrWorkspace, tam, MPI_BYTE, 0, 88, MPI_COMM_WORLD, &s );
+				}
+			}
+
+			// #Envio de último mensaje recivido
+			if(miId == 1) {
+				MPI_Send( ptrWorkspace, 0, MPI_BYTE, 0, 88, MPI_COMM_WORLD );
+			}
+			else if(miId == 0) {
+				 MPI_Recv( ptrWorkspace, 0, MPI_BYTE, 1, 88, MPI_COMM_WORLD, &s );
+				 t2 = MPI_Wtime();
+				 //printf("t1: %f, t2: %f, t2-t1: %f", t1, t2, t2-t1);
+			}
+
+		}
 	
 		// Calculo de prestaciones (te, tm, mbs).	####	D	 ####
-		// ... (D)
+		te = t2-t1;				// tiempo de comunicaciónes en s
+		tm = te/numMensajes;	// tiempo medio por mensaje
+		mbs = (1/(te/(numMensajes*tam)))/1000000;	// MB/s
+		tm *= 1000000;
 	
 		// Escritura de resultados.
 		if( miId == 0 ){
