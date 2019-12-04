@@ -7,7 +7,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 class EjemploTemperaturaProvincia {
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		int                numHebras, codProvincia, desp;
 		long               t1, t2, tt[];
 		double             ts, tp;
@@ -521,5 +521,5 @@ class Hebra extends Thread{
 			}
 		}while(!tarea.getesVeneno());
 	}
-
+*/
 }
