@@ -80,7 +80,7 @@ int main( int argc, char * argv[] ) {
 		vecArgs[ 2 ] = maxTam;
 		vecArgs[ 3 ] = incTam;
 	}
-	// Se completa la operacion de difusion del vector vecArgs.
+	// Se completa la operacion de difusion del vector vecArgs.		####	B	 ####
 	if( miId == 0 ) {
     		for(i = 1; i < numProcs; i++){
     			MPI_Send( vecArgs, 4, MPI_INT, i, 88, MPI_COMM_WORLD );
