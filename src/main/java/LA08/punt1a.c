@@ -140,10 +140,10 @@ int main( int argc, char * argv[] ) {
 		// Sincronizacion de todos los procesos
 		MPI_Barrier( MPI_COMM_WORLD );
 	
-		// Bucle de envio de "numMensajes" de dimension "tam" y toma de tiempos.
+		// Bucle de envio de "numMensajes" de dimension "tam" y toma de tiempos.	####	C	 ####
 		// ... (C)
 	
-		// Calculo de prestaciones (te, tm, mbs).
+		// Calculo de prestaciones (te, tm, mbs).	####	D	 ####
 		// ... (D)
 	
 		// Escritura de resultados.
