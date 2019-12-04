@@ -32,15 +32,21 @@ int main( int argc, char * argv[] ) {
 	// Imprime el nombre de los procesadores.
 	MPI_Get_processor_name( miNombre, & lonMiNombre );
 	printf( "Proceso %d  Se ejecuta en: %s\n", miId, miNombre );
-	
+
 	// El proceso 0 difunde el numero de argumentos de entrada al resto.
 	// Todos los procesos deben tener dicho numero en la variable numArgs.
 	if( miId == 0 ) {
 		numArgs = argc;
 	}
-	// Se completa la operacion de difusion de numArgs.
-	// ... (A)
-	
+	// Se completa la operacion de difusion de numArgs.		####	A	 ####
+	if( miId == 0 ) {
+		for(i = 1; i < numProcs; i++){
+			MPI_Send( &numArgs, 1, MPI_INT, i, 88, MPI_COMM_WORLD );
+		}
+	} else {
+		MPI_Recv( &numArgs, 1, MPI_INT, 0, 88, MPI_COMM_WORLD, &s );
+	}
+
 	// Todos los procesos comprueban el numero de argumentos de entrada.
 	if( ( numArgs != 3 )&&( numArgs != 5 ) ) {
 		if ( miId == 0 ) {
@@ -75,7 +81,13 @@ int main( int argc, char * argv[] ) {
 		vecArgs[ 3 ] = incTam;
 	}
 	// Se completa la operacion de difusion del vector vecArgs.
-	// ... (B)
+	if( miId == 0 ) {
+    		for(i = 1; i < numProcs; i++){
+    			MPI_Send( vecArgs, 4, MPI_INT, i, 88, MPI_COMM_WORLD );
+    		}
+    	} else {
+    		MPI_Recv( vecArgs, 4, MPI_INT, 0, 88, MPI_COMM_WORLD, &s );
+	}
 	
 	// Todos los procesos extraen la informacion almacena en el vector vecArgs.
 	numMensajes = vecArgs[ 0 ];
