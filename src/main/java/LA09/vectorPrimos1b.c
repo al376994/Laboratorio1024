@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "mpi.h"
 
-#define VECTOR_CORTO
+#undef VECTOR_CORTO
 
 // ============================================================================
 // Declaracion de prototipos locales.
@@ -80,18 +80,18 @@ int main( int argc, char *argv[] ) {
 	if( miId == 0 ) {
 		for( i = 0; i < dimVectorNumeros; i++ ) {
 			MPI_Recv( &dato_vacio, 0, MPI_CHAR, MPI_ANY_SOURCE, 88, MPI_COMM_WORLD, &s );
-			MPI_Ssend( &vectorNumeros[i], 1, MPI_LONG_LONG_INT, s.MPI_SOURCE, 88, MPI_COMM_WORLD );
+			MPI_Send( &vectorNumeros[i], 1, MPI_LONG_LONG_INT, s.MPI_SOURCE, 88, MPI_COMM_WORLD );
 		}
 
 		for( i = 1; i < numProcs; i++ ) {
 			MPI_Recv( &dato_vacio, 0, MPI_CHAR, MPI_ANY_SOURCE, 88, MPI_COMM_WORLD, &s );
-            MPI_Ssend( &vectorNumeros, 0, MPI_LONG_LONG_INT, s.MPI_SOURCE, 99, MPI_COMM_WORLD ); //veneno
+            MPI_Send( &vectorNumeros, 0, MPI_LONG_LONG_INT, s.MPI_SOURCE, 99, MPI_COMM_WORLD ); //veneno
 		}
 	} else {
 		int verdadero = 1;
 		long long value;
 		while(verdadero) {
-			MPI_Ssend( &dato_vacio, 0, MPI_CHAR, 0, 88, MPI_COMM_WORLD );
+			MPI_Send( &dato_vacio, 0, MPI_CHAR, 0, 88, MPI_COMM_WORLD );
 			MPI_Recv( &value, 1, MPI_LONG_LONG_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &s );
 			if(s.MPI_TAG == 99) {
 				verdadero = 0;
@@ -102,9 +102,7 @@ int main( int argc, char *argv[] ) {
 			}
 		}
 	}
-	MPI_Barrier( MPI_COMM_WORLD );
-	printf("miId: %d, numPrimosPar: %d\n", miId, numPrimosPar); fflush(stdout);
-	//MPI_Reduce( &numPrimosPar, &numPrimosPar, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD );
+	MPI_Reduce( ((miId==0)?MPI_IN_PLACE:&numPrimosPar), &numPrimosPar, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD );
 
 	// ...
 	
