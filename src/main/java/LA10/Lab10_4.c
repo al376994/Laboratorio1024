@@ -24,7 +24,7 @@ int main ( int argc , char * argv [] ) {
 	else{
 		MPI_Recv(&datoaux,1,MPI_INT,miId-1,88,MPI_COMM_WORLD,&s);
 		
-		if(miId%2==0) datoaux = dato + datoaux;
+		datoaux = dato + datoaux;
 		
 		MPI_Send(&datoaux, 1, MPI_INT,(miId+1)%numProcs,88, MPI_COMM_WORLD);
 

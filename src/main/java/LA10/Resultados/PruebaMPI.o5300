@@ -1,0 +1,24 @@
+Running on master host bi07.local
+Time is Wed Dec 18 14:36:15 CET 2019
+Directory is /home/al374074/Practica_010
+Procsfile: /var/spool/torque/aux//5300.patan.act.uji.es
+This jobs runs on the following processors:
+bi07 bi07 bi07 bi07 bi06 bi06 bi06 bi06 bi05 bi05 bi05 bi05 bi04 bi04 bi04 bi04 bi03 bi03 bi03 bi03 bi02 bi02 bi02 bi02 bi01 bi01 bi01 bi01 bi00 bi00 bi00 bi00
+Nodesfile: procs_5300.txt
+This jobs runs on the following nodes:
+bi07 bi06 bi05 bi04 bi03 bi02 bi01 bi00
+This job has allocated 32 cores on 8 nodes
+MPICC=mpicc
+MPIRUN=mpirun --mca btl_tcp_if_include eth0 -v 
+MPIOPT=--machinefile procs_5300.txt
+Proceso: 0,		 sumaInicial: 1068095.430271,		sumaFinal: 1068095.430271, diferencia: 0.000000
+Proceso: 0,		 tSec: 0.156130,			tPar: 0.020045, tDis: 0.072857
+			 tSec/tPar: 0.156130/0.020045,		tSec/(tPar+tDis)0.156130/0.092902
+Proc: 0  Fin de programa
+Proc: 2  Fin de programa
+Proc: 4  Fin de programa
+Proc: 1  Fin de programa
+Proc: 5  Fin de programa
+Proc: 6  Fin de programa
+Proc: 3  Fin de programa
+Proc: 7  Fin de programa
