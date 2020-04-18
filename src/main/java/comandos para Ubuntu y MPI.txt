@@ -1,0 +1,7 @@
+para ir a una carpeta: cd "/mnt/c/Users/Dani-portatil/Desktop/Todo/IntellijProjects/Laboratorio1024/src/main/java"
+antes de ejecutar ningun programa: echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+para compilar: mpicc vectorPrimos1a.c -o vectorPrimos1a		#ejemplo
+para ejecutar: mpiexec -n 2 vectorPrimos1a			#ejemplo, el 2 es numProcs
+
+usuario: user
+contraseña: user
